@@ -2,7 +2,7 @@
  * One codebase, built three times (Projects, Payroll, Materials).
  * Each build opens its own system from the online server (Hostinger).
  * The server address can be changed from the menu: File > Change server address. */
-const { app, BrowserWindow, Menu, shell, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, Menu, shell, ipcMain, dialog, Notification } = require('electron');
 let autoUpdater = null;
 try { autoUpdater = require('electron-updater').autoUpdater; } catch (e) { /* running without the updater (development) */ }
 const path = require('path');
@@ -205,13 +205,26 @@ function buildMenu() {
 
 /* ---------- automatic updates (new versions from the public GOC-Apps releases) ---------- */
 let updateReady = false, manualCheck = false;
+/* Windows notification (bottom-right of the screen / Action Center) */
+function notify(title, body, onClick) {
+  try {
+    if (!Notification.isSupported()) return;
+    const n = new Notification({ title, body, icon: ICON });
+    n.on('click', () => { if (onClick) onClick(); else if (win) { if (win.isMinimized()) win.restore(); win.focus(); } });
+    n.show();
+  } catch (e) {}
+}
 function setupUpdates() {
   if (!autoUpdater || !app.isPackaged) return;
   autoUpdater.channel = MODULE;            // each app has its own update file: projects.yml, payroll.yml, ...
   autoUpdater.autoDownload = true;          // download quietly in the background
   autoUpdater.autoInstallOnAppQuit = true;  // install when the app is closed
+  autoUpdater.on('update-available', info => {
+    notify(TITLE + ' update', 'Downloading version ' + info.version + ' in the background…');
+  });
   autoUpdater.on('update-downloaded', info => {
     updateReady = true;
+    notify(TITLE + ' ' + info.version + ' is ready', 'Click to restart now, or it installs when you close the app.', () => autoUpdater.quitAndInstall(false, true));
     dialog.showMessageBox(win, {
       type: 'info', title: 'Update ready', icon: ICON, buttons: ['Restart now', 'Later'], defaultId: 0, cancelId: 1,
       message: TITLE + ' ' + info.version + ' is ready.',
