@@ -1,0 +1,58 @@
+{
+  "appId": "com.gocbuilders.home",
+  "productName": "GOC Builders",
+  "copyright": "GOC Builders",
+  "directories": {
+    "output": "dist",
+    "buildResources": "build"
+  },
+  "files": [
+    "main.js",
+    "preload.js",
+    "settings.html",
+    "offline.html",
+    "app-config.json",
+    "package.json",
+    "build/icons/**"
+  ],
+  "extraMetadata": {
+    "name": "goc-builders",
+    "productName": "GOC Builders",
+    "gocModule": "home"
+  },
+  "artifactName": "GOC-Builders-Setup.${ext}",
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "icon": "build/icons/home.ico",
+    "executableName": "GOC-Builders"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": true,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": "always",
+    "createStartMenuShortcut": true,
+    "shortcutName": "GOC Builders",
+    "menuCategory": "GOC Builders",
+    "installerIcon": "build/icons/home.ico",
+    "uninstallerIcon": "build/icons/home.ico",
+    "uninstallDisplayName": "GOC Builders",
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": false
+  },
+  "publish": [
+    {
+      "provider": "generic",
+      "url": "https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download",
+      "channel": "home"
+    }
+  ]
+}

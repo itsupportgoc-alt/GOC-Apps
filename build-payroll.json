@@ -1,0 +1,58 @@
+{
+  "appId": "com.gocbuilders.payroll",
+  "productName": "GOC Payroll",
+  "copyright": "GOC Builders",
+  "directories": {
+    "output": "dist",
+    "buildResources": "build"
+  },
+  "files": [
+    "main.js",
+    "preload.js",
+    "settings.html",
+    "offline.html",
+    "app-config.json",
+    "package.json",
+    "build/icons/**"
+  ],
+  "extraMetadata": {
+    "name": "goc-payroll",
+    "productName": "GOC Payroll",
+    "gocModule": "payroll"
+  },
+  "artifactName": "GOC-Payroll-Setup.${ext}",
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "icon": "build/icons/payroll.ico",
+    "executableName": "GOC-Payroll"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": true,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": "always",
+    "createStartMenuShortcut": true,
+    "shortcutName": "GOC Payroll",
+    "menuCategory": "GOC Builders",
+    "installerIcon": "build/icons/payroll.ico",
+    "uninstallerIcon": "build/icons/payroll.ico",
+    "uninstallDisplayName": "GOC Payroll",
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": false
+  },
+  "publish": [
+    {
+      "provider": "generic",
+      "url": "https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download",
+      "channel": "payroll"
+    }
+  ]
+}

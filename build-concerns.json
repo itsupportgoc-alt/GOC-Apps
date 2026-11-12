@@ -1,0 +1,58 @@
+{
+  "appId": "com.gocbuilders.concerns",
+  "productName": "GOC Concerns",
+  "copyright": "GOC Builders",
+  "directories": {
+    "output": "dist",
+    "buildResources": "build"
+  },
+  "files": [
+    "main.js",
+    "preload.js",
+    "settings.html",
+    "offline.html",
+    "app-config.json",
+    "package.json",
+    "build/icons/**"
+  ],
+  "extraMetadata": {
+    "name": "goc-concerns",
+    "productName": "GOC Concerns",
+    "gocModule": "concerns"
+  },
+  "artifactName": "GOC-Concerns-Setup.${ext}",
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "icon": "build/icons/concerns.ico",
+    "executableName": "GOC-Concerns"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": true,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": "always",
+    "createStartMenuShortcut": true,
+    "shortcutName": "GOC Concerns",
+    "menuCategory": "GOC Builders",
+    "installerIcon": "build/icons/concerns.ico",
+    "uninstallerIcon": "build/icons/concerns.ico",
+    "uninstallDisplayName": "GOC Concerns",
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": false
+  },
+  "publish": [
+    {
+      "provider": "generic",
+      "url": "https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download",
+      "channel": "concerns"
+    }
+  ]
+}

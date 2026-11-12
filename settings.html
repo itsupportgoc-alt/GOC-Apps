@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+<title>Server address</title>
+<style>
+  body{font-family:"Segoe UI",Arial,sans-serif;margin:0;padding:24px;color:#172B3A;background:#fff}
+  h1{font-size:18px;margin:0 0 6px}
+  p{font-size:13px;color:#5B6B78;margin:0 0 16px;line-height:1.45}
+  label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#5B6B78}
+  input{width:100%;box-sizing:border-box;margin-top:6px;padding:10px 12px;font-size:14px;border:1px solid #C9D3DB;border-radius:8px}
+  input:focus{outline:2px solid #173F5F;border-color:#173F5F}
+  .err{color:#B42318;font-size:13px;min-height:18px;margin:8px 0 0}
+  .row{display:flex;gap:8px;justify-content:space-between;margin-top:18px}
+  button{font:inherit;font-size:14px;padding:9px 16px;border-radius:8px;border:1px solid #C9D3DB;background:#fff;cursor:pointer}
+  button.primary{background:#173F5F;color:#fff;border-color:#173F5F}
+  .link{border:none;background:none;color:#173F5F;padding:9px 0;text-decoration:underline}
+</style>
+</head>
+<body>
+  <h1>Server address</h1>
+  <p>The website where GOC Builders is uploaded (Hostinger). Change this when you connect your own domain. Your data is not affected.</p>
+  <label for="url">Website address</label>
+  <input id="url" type="text" spellcheck="false" placeholder="https://www.yourdomain.com">
+  <div class="err" id="err"></div>
+  <div class="row">
+    <button class="link" id="reset" type="button">Use the default address</button>
+    <div style="display:flex;gap:8px">
+      <button id="cancel" type="button">Cancel</button>
+      <button class="primary" id="save" type="button">Save</button>
+    </div>
+  </div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  let info = {};
+  window.goc.get().then((i) => { info = i; $('url').value = i.serverUrl; $('url').select(); });
+  async function save() {
+    const r = await window.goc.save($('url').value);
+    if (!r.ok) $('err').textContent = r.error;
+  }
+  $('save').onclick = save;
+  $('cancel').onclick = () => window.goc.close();
+  $('reset').onclick = () => { $('url').value = info.defaultServerUrl; $('err').textContent = ''; };
+  $('url').addEventListener('keydown', (e) => { if (e.key === 'Enter') save(); if (e.key === 'Escape') window.goc.close(); });
+</script>
+</body>
+</html>

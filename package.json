@@ -1,0 +1,30 @@
+{
+  "name": "goc-builders-desktop",
+  "version": "1.1.0",
+  "description": "GOC Builders Windows apps (auto-updating)",
+  "author": "GOC Builders",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "main.js",
+  "gocModule": "home",
+  "scripts": {
+    "start": "electron .",
+    "build:projects": "electron-builder --win nsis --x64 --publish never -c build-projects.json",
+    "build:payroll": "electron-builder --win nsis --x64 --publish never -c build-payroll.json",
+    "build:materials": "electron-builder --win nsis --x64 --publish never -c build-materials.json",
+    "build:all": "npm run build:projects && npm run build:payroll && npm run build:materials && npm run build:concerns && npm run build:home",
+    "build:concerns": "electron-builder --win nsis --x64 --publish never -c build-concerns.json",
+    "build:home": "electron-builder --win nsis --x64 --publish never -c build-home.json"
+  },
+  "devDependencies": {
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8"
+  },
+  "dependencies": {
+    "electron-updater": "6.3.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsupportgoc-alt/GOC-Apps.git"
+  }
+}

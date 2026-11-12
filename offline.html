@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+<title>Cannot connect</title>
+<style>
+  body{font-family:"Segoe UI",Arial,sans-serif;margin:0;min-height:100vh;display:grid;place-items:center;background:#F4F7F9;color:#172B3A}
+  .card{background:#fff;border:1px solid #DCE3E8;border-radius:14px;padding:32px;max-width:520px;text-align:center;box-shadow:0 10px 30px rgba(23,43,58,.08)}
+  .mark{display:inline-block;background:#173F5F;color:#fff;font-weight:800;letter-spacing:.04em;padding:8px 12px;border-radius:10px;margin-bottom:14px}
+  h1{font-size:20px;margin:0 0 8px}
+  p{font-size:14px;color:#5B6B78;line-height:1.5;margin:0 0 10px}
+  code{font-size:12px;background:#F4F7F9;padding:2px 6px;border-radius:6px;word-break:break-all}
+  .row{display:flex;gap:10px;justify-content:center;margin-top:18px}
+  button{font:inherit;font-size:14px;padding:10px 18px;border-radius:8px;border:1px solid #C9D3DB;background:#fff;cursor:pointer}
+  button.primary{background:#173F5F;color:#fff;border-color:#173F5F}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="mark">GOC</div>
+    <h1 id="t">Cannot connect to the server</h1>
+    <p>Check that this computer is connected to the internet, then click <b>Try again</b>.</p>
+    <p>Server: <code id="u"></code></p>
+    <p style="font-size:12px" id="e"></p>
+    <div class="row">
+      <button id="settings" type="button">Change server address</button>
+      <button class="primary" id="retry" type="button">Try again</button>
+    </div>
+  </div>
+<script>
+  const q = new URLSearchParams(location.search);
+  document.getElementById('u').textContent = q.get('url') || '';
+  document.getElementById('e').textContent = q.get('err') ? 'Details: ' + q.get('err') : '';
+  if (q.get('title')) document.title = q.get('title');
+  document.getElementById('retry').onclick = () => window.goc.retry();
+  document.getElementById('settings').onclick = () => window.goc.settings();
+</script>
+</body>
+</html>

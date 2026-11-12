@@ -1,0 +1,25 @@
+{
+  "defaultServerUrl": "https://lightgreen-rhinoceros-813705.hostingersite.com/",
+  "modules": {
+    "home": {
+      "path": "",
+      "title": "GOC Builders"
+    },
+    "projects": {
+      "path": "projects/",
+      "title": "GOC Project Hub"
+    },
+    "payroll": {
+      "path": "payroll/",
+      "title": "GOC Payroll & Manpower"
+    },
+    "materials": {
+      "path": "materials/",
+      "title": "GOC Materials Monitoring"
+    },
+    "concerns": {
+      "path": "concerns/",
+      "title": "GOC Project Concerns"
+    }
+  }
+}

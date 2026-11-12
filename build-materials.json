@@ -1,0 +1,58 @@
+{
+  "appId": "com.gocbuilders.materials",
+  "productName": "GOC Materials",
+  "copyright": "GOC Builders",
+  "directories": {
+    "output": "dist",
+    "buildResources": "build"
+  },
+  "files": [
+    "main.js",
+    "preload.js",
+    "settings.html",
+    "offline.html",
+    "app-config.json",
+    "package.json",
+    "build/icons/**"
+  ],
+  "extraMetadata": {
+    "name": "goc-materials",
+    "productName": "GOC Materials",
+    "gocModule": "materials"
+  },
+  "artifactName": "GOC-Materials-Setup.${ext}",
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "icon": "build/icons/materials.ico",
+    "executableName": "GOC-Materials"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": true,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": "always",
+    "createStartMenuShortcut": true,
+    "shortcutName": "GOC Materials",
+    "menuCategory": "GOC Builders",
+    "installerIcon": "build/icons/materials.ico",
+    "uninstallerIcon": "build/icons/materials.ico",
+    "uninstallDisplayName": "GOC Materials",
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": false
+  },
+  "publish": [
+    {
+      "provider": "generic",
+      "url": "https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download",
+      "channel": "materials"
+    }
+  ]
+}
