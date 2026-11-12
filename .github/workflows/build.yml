@@ -1,0 +1,68 @@
+# Builds the 5 GOC Builders Windows apps and publishes them (with auto-update files) as a release of this public repo.
+# Runs on every push to main, or by hand: Actions > "Build GOC apps" > Run workflow.
+# Installed apps check https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/<app>.yml and update themselves.
+name: Build GOC apps
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Set version (every build is a newer version, so installed apps update)
+        shell: bash
+        run: npm version "1.1.${{ github.run_number }}" --no-git-tag-version --allow-same-version
+
+      - name: Build one installer per build-*.json
+        shell: bash
+        run: |
+          for c in build-*.json; do
+            echo "=== $c ==="
+            npx electron-builder --win nsis --x64 --publish never -c "$c"
+          done
+
+      - name: List files
+        shell: bash
+        run: ls -la dist
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.1.${{ github.run_number }}
+          name: GOC Builders Apps v1.1.${{ github.run_number }}
+          make_latest: true
+          body: |
+            ## GOC Builders - Windows apps (auto-update)
+
+            | App | Download |
+            |---|---|
+            | **GOC Builders** (home page, all systems) | [GOC-Builders-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Builders-Setup.exe) |
+            | Project Hub | [GOC-Projects-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Projects-Setup.exe) |
+            | Payroll & Manpower | [GOC-Payroll-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Payroll-Setup.exe) |
+            | Materials Monitoring | [GOC-Materials-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Materials-Setup.exe) |
+            | Project Concerns | [GOC-Concerns-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Concerns-Setup.exe) |
+
+            Installed apps update themselves: they download the new version in the background and install it when closed (or Help > Check for updates).
+          files: |
+            dist/*-Setup.exe
+            dist/*-Setup.exe.blockmap
+            dist/home.yml
+            dist/projects.yml
+            dist/payroll.yml
+            dist/materials.yml
+            dist/concerns.yml
