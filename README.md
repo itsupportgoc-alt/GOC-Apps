@@ -26,3 +26,7 @@ All versions: [Releases](https://github.com/itsupportgoc-alt/GOC-Apps/releases)
 ## For the developer
 
 This repository only contains the app wrapper (no system code, no passwords). Every push to `main` builds a new version (`v1.1.<build number>`) with GitHub Actions.
+
+## What's new
+
+- **2026-11-13** - Payroll & Manpower: new 13th Month Pay and Non-Returning Workers pages; Retention column in Pakyawan.
