@@ -34,3 +34,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-13** - Project Hub: one Import / Export button; Full backup and Restore backup removed.
 - **2026-11-13** - Payroll & Manpower: sort A-Z / Z-A and sortable columns in Years of service, 13th Month Pay and Non-Returning Workers.
 - **2026-11-13** - 13th Month Pay and Non-Returning Workers: Designation and Date hired columns beside Site.
+- **2026-11-13** - Pakyawan: add and edit additions and cash advance lines.
