@@ -33,3 +33,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-13** - Payroll & Manpower: import the weekly payroll Excel file (JOY file) as it is, all site sheets at once.
 - **2026-11-13** - Project Hub: one Import / Export button; Full backup and Restore backup removed.
 - **2026-11-13** - Payroll & Manpower: sort A-Z / Z-A and sortable columns in Years of service, 13th Month Pay and Non-Returning Workers.
+- **2026-11-13** - 13th Month Pay and Non-Returning Workers: Designation and Date hired columns beside Site.
