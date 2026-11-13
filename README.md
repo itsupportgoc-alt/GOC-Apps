@@ -30,3 +30,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 ## What's new
 
 - **2026-11-13** - Payroll & Manpower: new 13th Month Pay and Non-Returning Workers pages; Retention column in Pakyawan.
+- **2026-11-13** - Payroll & Manpower: import the weekly payroll Excel file (JOY file) as it is, all site sheets at once.
