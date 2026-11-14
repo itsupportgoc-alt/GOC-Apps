@@ -45,3 +45,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-14** - Designation and Years of service filters (Years of service, 13th Month Pay, Non-Returning).
 - **2026-11-14** - Payroll cards (workers, payroll, net pay, pakyawan balance) only on the Charts tab.
 - **2026-11-14** - Food allowance card on the Payroll Charts tab.
+- **2026-11-14** - What's new grouped into one entry per day (fewer popups).
