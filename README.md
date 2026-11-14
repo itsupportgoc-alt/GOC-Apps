@@ -41,3 +41,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-14** - Payroll Summary: month / year fix.
 - **2026-11-14** - Years of service: filter by years of service.
 - **2026-11-14** - Payroll Summary: Allowance column; CA / Vale combined.
+- **2026-11-14** - Payroll Summary: Vale removed.
