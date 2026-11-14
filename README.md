@@ -38,3 +38,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-13** - Pakyawan list: Update button (was Open).
 - **2026-11-13** - Payroll Summary: Other column renamed to Food Allowance.
 - **2026-11-13** - All systems: Print and Export to Excel by month or year.
+- **2026-11-14** - Payroll Summary: month / year fix.
