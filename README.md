@@ -53,3 +53,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-16** - 13th Month Pay print/export: Rate/Day to Total days titles left blank.
 - **2026-11-16** - Payroll Summary: Food Allowance per site (client's computation).
 - **2026-11-16** - Payroll Summary: CA Request and Total columns.
+- **2026-11-16** - Payroll print/export: table only.
