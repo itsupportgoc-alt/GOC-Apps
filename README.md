@@ -50,3 +50,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-14** - Payroll sidebar: Summary after Charts, Payroll sheet below it.
 - **2026-11-16** - Project Concerns: loading placeholders on the project list.
 - **2026-11-16** - Years of service page removed; 13th Month Pay shows Years of service beside Date hired.
+- **2026-11-16** - 13th Month Pay print/export: Rate/Day to Total days titles left blank.
