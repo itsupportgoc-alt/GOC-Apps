@@ -48,3 +48,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-14** - What's new grouped into one entry per day (fewer popups).
 - **2026-11-14** - Edit CA and Motor balance in Workers & balances.
 - **2026-11-14** - Payroll sidebar: Summary after Charts, Payroll sheet below it.
+- **2026-11-16** - Project Concerns: loading placeholders on the project list.
