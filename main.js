@@ -203,7 +203,7 @@ function buildMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(tpl));
 }
 
-/* ---------- automatic updates (new versions from the public GOC-Apps releases) ---------- */
+/* ---------- automatic updates (new versions from the GOC website: /updates/<app>.yml) ---------- */
 let updateReady = false, manualCheck = false;
 /* Windows notification (bottom-right of the screen / Action Center) */
 function notify(title, body, onClick) {

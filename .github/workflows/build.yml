@@ -1,6 +1,8 @@
-# Builds the 5 GOC Builders Windows apps and publishes them (with auto-update files) as a release of this public repo.
+# Builds the 5 GOC Builders Windows apps and publishes them (with auto-update files).
 # Runs on every push to main, or by hand: Actions > "Build GOC apps" > Run workflow.
-# Installed apps check https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/<app>.yml and update themselves.
+# Installed apps (v1.1.30 and newer) check https://lightgreen-rhinoceros-813705.hostingersite.com/updates/<app>.yml
+# and update themselves. The files are uploaded there by FTP (repository secrets FTP_SERVER, FTP_USERNAME, FTP_PASSWORD;
+# the FTP account's folder is public_html/updates). FTP_SERVER is the FTP IP; the connection is TLS-encrypted. A GitHub release is also made (useful while the repo is public).
 name: Build GOC apps
 
 on:
@@ -39,6 +41,31 @@ jobs:
       - name: List files
         shell: bash
         run: ls -la dist
+
+      - name: Upload update files to Hostinger (public_html/updates)
+        shell: bash
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          if [ -z "$FTP_SERVER" ] || [ -z "$FTP_USERNAME" ] || [ -z "$FTP_PASSWORD" ]; then
+            echo "::error::FTP secrets are missing - the update files were NOT uploaded to Hostinger"; exit 1
+          fi
+          up() { for t in 1 2 3; do curl -sS --fail --ssl-reqd --insecure --ftp-pasv --retry 2 --connect-timeout 30 -T "$1" --user "$FTP_USERNAME:$FTP_PASSWORD" "ftp://$FTP_SERVER/$2" && return 0; echo "retry $1"; sleep 10; done; return 1; }
+          # the installers first, the small .yml files last: apps only see a new version once its installer is there
+          for f in dist/*-Setup.exe dist/*-Setup.exe.blockmap; do echo "upload $f"; up "$f" "$(basename "$f")"; done
+          up hosting/updates.htaccess .htaccess
+          for c in home projects payroll materials concerns; do echo "upload $c.yml"; up "dist/$c.yml" "$c.yml"; done
+          echo "Uploaded to Hostinger."
+
+      - name: Check the update files on Hostinger
+        shell: bash
+        run: |
+          for c in home projects payroll materials concerns; do
+            v=$(curl -sS --fail "https://lightgreen-rhinoceros-813705.hostingersite.com/updates/$c.yml?t=$RANDOM" | sed -n 's/^version: //p')
+            echo "$c.yml -> $v"; [ "$v" = "1.1.${{ github.run_number }}" ] || { echo "::error::$c.yml on Hostinger is not the new version"; exit 1; }
+          done
 
       - name: Publish release
         uses: softprops/action-gh-release@v2

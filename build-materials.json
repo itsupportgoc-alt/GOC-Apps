@@ -51,7 +51,7 @@
   "publish": [
     {
       "provider": "generic",
-      "url": "https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download",
+      "url": "https://lightgreen-rhinoceros-813705.hostingersite.com/updates",
       "channel": "materials"
     }
   ]

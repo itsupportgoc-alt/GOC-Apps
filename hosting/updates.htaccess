@@ -1,0 +1,9 @@
+# GOC app updates folder (uploaded by the GitHub build)
+Options -Indexes
+<FilesMatch "\.(yml)$">
+  Header set Cache-Control "no-cache, no-store, must-revalidate"
+</FilesMatch>
+<IfModule mod_mime.c>
+  AddType text/yaml .yml
+  AddType application/octet-stream .exe .blockmap
+</IfModule>
