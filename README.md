@@ -57,3 +57,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-16** - 13th Month Pay: years of service up to Dec 31 of the year.
 - **2026-11-16** - Payroll print: title is printed again.
 - **2026-11-16** - Updates now come from the GOC website (Hostinger /updates folder) instead of GitHub, so this repository can be made private once every PC has v1.1.30.
+- **2026-11-16** - Test update: delivered from the GOC website (Hostinger) with this repository private.
