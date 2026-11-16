@@ -42,6 +42,40 @@ jobs:
         shell: bash
         run: ls -la dist
 
+      - name: Keep the built files for the publish job
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          retention-days: 3
+          path: |
+            dist/*-Setup.exe
+            dist/*-Setup.exe.blockmap
+            dist/home.yml
+            dist/projects.yml
+            dist/payroll.yml
+            dist/materials.yml
+            dist/concerns.yml
+
+  # Upload to Hostinger + GitHub release run on Linux (FTP from the Windows build machine timed out)
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Check the FTP connection
+        shell: bash
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        run: |
+          ls -la dist
+          if timeout 20 bash -c "exec 3<>/dev/tcp/$FTP_SERVER/21"; then echo "FTP port 21 reachable"; else echo "::error::Cannot reach the Hostinger FTP server (port 21) from GitHub"; exit 1; fi
+
       - name: Upload update files to Hostinger (public_html/updates)
         shell: bash
         env:
