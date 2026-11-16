@@ -54,3 +54,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-16** - Payroll Summary: Food Allowance per site (client's computation).
 - **2026-11-16** - Payroll Summary: CA Request and Total columns.
 - **2026-11-16** - Payroll print/export: table only.
+- **2026-11-16** - 13th Month Pay: years of service up to Dec 31 of the year.
