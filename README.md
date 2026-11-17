@@ -64,3 +64,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-17** - Updates come from the GitHub releases again (no FTP). The website's /updates/ address sends older apps here.
 - **2026-11-17** - GOC logo background on the home page only.
 - **2026-11-17** - New system: Accounting & Purchasing.
+- **2026-11-17** - Updates: the installer closes the running app itself (no more 'cannot be closed' message).

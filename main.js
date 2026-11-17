@@ -205,6 +205,12 @@ function buildMenu() {
 
 /* ---------- automatic updates (new versions from the public GOC-Apps releases) ---------- */
 let updateReady = false, manualCheck = false;
+/** close every window at once, then install: the installer then finds the app already closed */
+function installUpdateNow() {
+  app.removeAllListeners('window-all-closed');
+  BrowserWindow.getAllWindows().forEach(w => { try { w.removeAllListeners('close'); w.destroy(); } catch (e) {} });
+  setTimeout(() => autoUpdater.quitAndInstall(false, true), 300);
+}
 /* Windows notification (bottom-right of the screen / Action Center) */
 function notify(title, body, onClick) {
   try {
@@ -224,12 +230,12 @@ function setupUpdates() {
   });
   autoUpdater.on('update-downloaded', info => {
     updateReady = true;
-    notify(TITLE + ' ' + info.version + ' is ready', 'Click to restart now, or it installs when you close the app.', () => autoUpdater.quitAndInstall(false, true));
+    notify(TITLE + ' ' + info.version + ' is ready', 'Click to restart now, or it installs when you close the app.', () => installUpdateNow());
     dialog.showMessageBox(win, {
       type: 'info', title: 'Update ready', icon: ICON, buttons: ['Restart now', 'Later'], defaultId: 0, cancelId: 1,
       message: TITLE + ' ' + info.version + ' is ready.',
       detail: 'Restart now to use the new version, or it will be installed the next time you close the app.'
-    }).then(r => { if (r.response === 0) autoUpdater.quitAndInstall(false, true); });
+    }).then(r => { if (r.response === 0) installUpdateNow(); });
   });
   autoUpdater.on('update-not-available', () => {
     if (manualCheck) dialog.showMessageBox(win, { type: 'info', title: 'No updates', icon: ICON, message: 'You have the latest version (' + app.getVersion() + ').' });
@@ -245,7 +251,7 @@ function setupUpdates() {
 }
 function checkForUpdatesNow() {
   if (!autoUpdater || !app.isPackaged) { dialog.showMessageBox(win, { type: 'info', message: 'Updates work only in the installed app.' }); return; }
-  if (updateReady) { autoUpdater.quitAndInstall(false, true); return; }
+  if (updateReady) { installUpdateNow(); return; }
   manualCheck = true;
   autoUpdater.checkForUpdates().catch(() => {});
 }
