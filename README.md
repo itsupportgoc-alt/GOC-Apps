@@ -60,3 +60,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-16** - Test update: delivered from the GOC website (Hostinger) with this repository private.
 - **2026-11-17** - Payroll sheet: Add. OT hrs and vale columns removed.
 - **2026-11-17** - Summary CA DEDUCTION, chart totals; updates folder recreated on Hostinger.
+- **2026-11-17** - GOC logo watermark background.
