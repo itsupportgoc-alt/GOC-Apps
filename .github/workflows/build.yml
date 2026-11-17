@@ -54,6 +54,7 @@ jobs:
             dist/payroll.yml
             dist/materials.yml
             dist/concerns.yml
+            dist/accounting.yml
 
   # GitHub release (the installed apps update from it)
   publish:
@@ -83,6 +84,7 @@ jobs:
             | Payroll & Manpower | [GOC-Payroll-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Payroll-Setup.exe) |
             | Materials Monitoring | [GOC-Materials-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Materials-Setup.exe) |
             | Project Concerns | [GOC-Concerns-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Concerns-Setup.exe) |
+            | Accounting & Purchasing | [GOC-Accounting-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Accounting-Setup.exe) |
 
             Installed apps update themselves: they download the new version in the background and install it when closed (or Help > Check for updates).
           files: |
@@ -93,3 +95,4 @@ jobs:
             dist/payroll.yml
             dist/materials.yml
             dist/concerns.yml
+            dist/accounting.yml

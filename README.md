@@ -4,11 +4,12 @@ Download and install the app you need. The apps **update themselves** when a new
 
 | App | Download |
 |---|---|
-| **GOC Builders** (home page with all 4 systems) | [GOC-Builders-Setup.exe](https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/GOC-Builders-Setup.exe) |
+| **GOC Builders** (home page with all 5 systems) | [GOC-Builders-Setup.exe](https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/GOC-Builders-Setup.exe) |
 | Project Hub | [GOC-Projects-Setup.exe](https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/GOC-Projects-Setup.exe) |
 | Payroll & Manpower | [GOC-Payroll-Setup.exe](https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/GOC-Payroll-Setup.exe) |
 | Materials Monitoring | [GOC-Materials-Setup.exe](https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/GOC-Materials-Setup.exe) |
 | Project Concerns | [GOC-Concerns-Setup.exe](https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/GOC-Concerns-Setup.exe) |
+| Accounting & Purchasing | [GOC-Accounting-Setup.exe](https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/GOC-Accounting-Setup.exe) |
 
 All versions: [Releases](https://github.com/itsupportgoc-alt/GOC-Apps/releases)
 
@@ -65,3 +66,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-17** - GOC logo background on the home page only.
 - **2026-11-17** - New system: Accounting & Purchasing.
 - **2026-11-17** - Updates: the installer closes the running app itself (no more 'cannot be closed' message).
+- **2026-11-17** - New app: GOC Accounting (Accounting & Purchasing).

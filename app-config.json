@@ -20,6 +20,10 @@
     "concerns": {
       "path": "concerns/",
       "title": "GOC Project Concerns"
+    },
+    "accounting": {
+      "path": "accounting/",
+      "title": "GOC Accounting & Purchasing"
     }
   }
 }
