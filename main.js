@@ -16,6 +16,8 @@ const MOD = cfg.modules[MODULE];
 const TITLE = MOD.title;
 const ICON = path.join(__dirname, 'build', 'icons', MODULE + '.ico');
 const FULL = MODULE === 'home';   // the "GOC Builders" app: home page with all the cards, nothing blocked
+// App lock: the online system only answers requests that carry this key (put into app-config.json when GitHub builds the app)
+const APP_KEY = cfg.appKey || '';
 
 let win = null;
 let settingsWin = null;
@@ -72,6 +74,16 @@ const HIDE_HOME_CSS = `
   a.brandmark[href="../"], a.brandmark[href="../index.php"] { pointer-events: none !important; cursor: default !important; }
   a.crumb[href="../"], a.crumb[href="./"] { display: none !important; }
 `;
+
+/* ---------- app lock: send the app key with every request to the GOC server ---------- */
+function sendAppKey() {
+  if (!APP_KEY) return;
+  const { session } = require('electron');
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, cb) => {
+    try { if (sameSite(details.url)) details.requestHeaders['X-GOC-App-Key'] = APP_KEY; } catch (e) { /* keep the request as it is */ }
+    cb({ requestHeaders: details.requestHeaders });
+  });
+}
 
 /* ---------- windows ---------- */
 function loadModule() {
@@ -262,6 +274,6 @@ if (!app.requestSingleInstanceLock()) {
 } else {
   app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.focus(); } });
   app.setAppUserModelId('com.gocbuilders.' + MODULE);
-  app.whenReady().then(() => { buildMenu(); createWindow(); setupUpdates(); });
+  app.whenReady().then(() => { sendAppKey(); buildMenu(); createWindow(); setupUpdates(); });
   app.on('window-all-closed', () => app.quit());
 }

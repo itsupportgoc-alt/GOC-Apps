@@ -49,6 +49,14 @@ jobs:
       - name: Install
         run: npm install --no-audit --no-fund
 
+      - name: Put the app key into the apps (GitHub secret GOC_APP_KEY; the online system only answers the apps)
+        shell: bash
+        env:
+          APP_KEY: ${{ secrets.GOC_APP_KEY }}
+        run: |
+          if [ -z "$APP_KEY" ]; then echo "GOC_APP_KEY secret is missing"; exit 1; fi
+          node -e "const f='app-config.json';const c=JSON.parse(require('fs').readFileSync(f,'utf8'));c.appKey=process.env.APP_KEY;require('fs').writeFileSync(f,JSON.stringify(c,null,2))"
+
       - name: Set version (every build is a newer version, so the updated apps update)
         shell: bash
         run: npm version "1.1.${{ github.run_number }}" --no-git-tag-version --allow-same-version
