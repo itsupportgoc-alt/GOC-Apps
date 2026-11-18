@@ -68,3 +68,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-17** - Updates: the installer closes the running app itself (no more 'cannot be closed' message).
 - **2026-11-17** - New app: GOC Accounting (Accounting & Purchasing).
 - **2026-11-18** - Only the changed apps update: release-apps.txt picks the apps; GOC Builders (all systems) always updates.
+- **2026-11-18** - Payroll: Deduction column and TOTAL row in the Balances window.
