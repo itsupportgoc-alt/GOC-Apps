@@ -76,3 +76,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-18** - Payroll: the balance switch also keeps workers with a motor loan balance.
 - **2026-11-18** - Payroll: no-balance workers hidden by default ('show no balance' checkbox).
 - **2026-11-18** - All apps: send the app key, so the online system can be locked to the GOC apps only.
+- **2026-11-18** - Project Hub: project search in Add billing.
