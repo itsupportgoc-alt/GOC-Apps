@@ -72,3 +72,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-18** - Payroll: weekly payroll import fix.
 - **2026-11-18** - Payroll: 'Workers & balances' renamed to 'Cash Advance Payment Journal'.
 - **2026-11-18** - New red GOC logo: GOC Builders app icon and the 'Cannot connect' screen.
+- **2026-11-18** - Payroll: 'only with CA balance' switch in the Cash Advance Payment Journal.
