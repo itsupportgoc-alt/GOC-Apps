@@ -71,3 +71,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-18** - Payroll: Deduction column and TOTAL row in the Balances window.
 - **2026-11-18** - Payroll: weekly payroll import fix.
 - **2026-11-18** - Payroll: 'Workers & balances' renamed to 'Cash Advance Payment Journal'.
+- **2026-11-18** - New red GOC logo: GOC Builders app icon and the 'Cannot connect' screen.
