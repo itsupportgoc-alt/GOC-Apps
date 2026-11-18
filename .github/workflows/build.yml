@@ -1,11 +1,20 @@
-# Builds the 5 GOC Builders Windows apps and publishes them (with auto-update files) as a release of this public repo.
+# Builds the GOC Builders Windows apps and publishes them (with auto-update files) as a release of this public repo.
 # Runs on every push to main, or by hand: Actions > "Build GOC apps" > Run workflow.
 # Installed apps check https://github.com/itsupportgoc-alt/GOC-Apps/releases/latest/download/<app>.yml and update themselves.
 # (Apps v1.1.31 - v1.1.35 check https://lightgreen-rhinoceros-813705.hostingersite.com/updates/<app>.yml, which sends them here.)
+#
+# ONLY THE CHANGED APPS UPDATE: release-apps.txt names the apps to update (home projects payroll materials concerns accounting, or all).
+# The GOC Builders app (home, all systems) is always updated. The other apps are copied unchanged from the last release,
+# so they keep their version and do not update.
 name: Build GOC apps
 
 on:
   workflow_dispatch:
+    inputs:
+      apps:
+        description: 'Apps to update (e.g. "payroll materials" or "all"); blank = use release-apps.txt'
+        required: false
+        default: ''
   push:
     branches: [main]
 
@@ -15,8 +24,23 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+    outputs:
+      apps: ${{ steps.apps.outputs.apps }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Which apps to update
+        id: apps
+        shell: bash
+        run: |
+          list="${{ github.event.inputs.apps }}"
+          if [ -z "$list" ] && [ -f release-apps.txt ]; then list="$(tr -d '\r' < release-apps.txt | grep -v '^#' | tr '\n' ' ')"; fi
+          list="$(echo "$list" | tr ',' ' ' | tr 'A-Z' 'a-z')"
+          all="home projects payroll materials concerns accounting"
+          if [ -z "$(echo $list)" ] || echo " $list " | grep -q " all "; then sel="$all"
+          else sel="home"; for a in $list; do if [ -f "build-$a.json" ] && [ "$a" != home ]; then sel="$sel $a"; fi; done; fi
+          echo "apps=$sel" >> "$GITHUB_OUTPUT"
+          echo "Apps to update: $sel"
 
       - uses: actions/setup-node@v4
         with:
@@ -25,16 +49,16 @@ jobs:
       - name: Install
         run: npm install --no-audit --no-fund
 
-      - name: Set version (every build is a newer version, so installed apps update)
+      - name: Set version (every build is a newer version, so the updated apps update)
         shell: bash
         run: npm version "1.1.${{ github.run_number }}" --no-git-tag-version --allow-same-version
 
-      - name: Build one installer per build-*.json
+      - name: Build the installers of the apps to update
         shell: bash
         run: |
-          for c in build-*.json; do
-            echo "=== $c ==="
-            npx electron-builder --win nsis --x64 --publish never -c "$c"
+          for a in ${{ steps.apps.outputs.apps }}; do
+            echo "=== build-$a.json ==="
+            npx electron-builder --win nsis --x64 --publish never -c "build-$a.json"
           done
 
       - name: List files
@@ -49,24 +73,45 @@ jobs:
           path: |
             dist/*-Setup.exe
             dist/*-Setup.exe.blockmap
-            dist/home.yml
-            dist/projects.yml
-            dist/payroll.yml
-            dist/materials.yml
-            dist/concerns.yml
-            dist/accounting.yml
+            dist/*.yml
 
   # GitHub release (the installed apps update from it)
   publish:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
       - uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
+
+      - name: Add the apps that did not change (copied from the last release, same version)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SEL: ${{ needs.build.outputs.apps }}
+        shell: bash
+        run: |
+          set -e
+          mkdir -p out
+          prev=$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName -q .tagName)
+          echo "Last release: $prev"
+          for a in home projects payroll materials concerns accounting; do
+            if echo " $SEL " | grep -q " $a "; then
+              cp "dist/$a.yml" out/
+              exe=$(grep -m1 '^path:' "out/$a.yml" | sed 's/^path: *//' | tr -d "'\"\r")
+              cp "dist/$exe" "dist/$exe.blockmap" out/
+              echo "$a: NEW $(grep -m1 '^version:' out/$a.yml)"
+            else
+              gh release download "$prev" --repo "$GITHUB_REPOSITORY" -D out -p "$a.yml"
+              exe=$(grep -m1 '^path:' "out/$a.yml" | sed 's/^path: *//' | tr -d "'\"\r")
+              gh release download "$prev" --repo "$GITHUB_REPOSITORY" -D out -p "$exe" -p "$exe.blockmap"
+              echo "$a: kept $(grep -m1 '^version:' out/$a.yml)"
+            fi
+          done
+          ls -la out
+          names=""
+          for a in $SEL; do case $a in home) n="GOC Builders";; projects) n="Project Hub";; payroll) n="Payroll & Manpower";; materials) n="Materials Monitoring";; concerns) n="Project Concerns";; accounting) n="Accounting & Purchasing";; esac; names="$names${names:+, }$n"; done
+          echo "UPDATED=$names" >> "$GITHUB_ENV"
 
       - name: Publish release
         uses: softprops/action-gh-release@v2
@@ -76,6 +121,8 @@ jobs:
           make_latest: true
           body: |
             ## GOC Builders - Windows apps (auto-update)
+
+            **Updated in this release:** ${{ env.UPDATED }}. The other apps are unchanged (they keep their version and do not update).
 
             | App | Download |
             |---|---|
@@ -87,12 +134,4 @@ jobs:
             | Accounting & Purchasing | [GOC-Accounting-Setup.exe](https://github.com/${{ github.repository }}/releases/latest/download/GOC-Accounting-Setup.exe) |
 
             Installed apps update themselves: they download the new version in the background and install it when closed (or Help > Check for updates).
-          files: |
-            dist/*-Setup.exe
-            dist/*-Setup.exe.blockmap
-            dist/home.yml
-            dist/projects.yml
-            dist/payroll.yml
-            dist/materials.yml
-            dist/concerns.yml
-            dist/accounting.yml
+          files: out/*
