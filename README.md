@@ -82,3 +82,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-19** - Payroll: salary adjustments table like the payroll sheet.
 - **2026-11-19** - Payroll: salary adjustments typed on each employee row.
 - **2026-11-19** - Payroll: salary adjustments with the payroll columns.
+- **2026-11-19** - Payroll: salary adjustments - search and add the employee.
