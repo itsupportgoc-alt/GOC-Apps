@@ -92,3 +92,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-19** - Accounting: bank / account no. removed from the Payable window.
 - **2026-11-19** - Payroll: transfer of employees.
 - **2026-11-19** - Accounting: voucher returned tick box, supplier VAT auto-computation, Service Invoice log, SSS / PhilHealth log.
+- **2026-11-19** - Payroll: Mandatory contributions page (SSS / HDMF / PHIC, weekly deduction).
