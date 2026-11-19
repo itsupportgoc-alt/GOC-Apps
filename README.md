@@ -89,3 +89,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-19** - Payroll: no empty CA request blocks.
 - **2026-11-19** - Signatures at the bottom of the printed payroll; Excel exports print one page wide.
 - **2026-11-19** - Bigger text in the printed payroll and in Excel exports.
+- **2026-11-19** - Accounting: bank / account no. removed from the Payable window.
