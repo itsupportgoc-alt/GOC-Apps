@@ -85,3 +85,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-19** - Payroll: salary adjustments - search and add the employee.
 - **2026-11-19** - Payroll: CA Request section and signatures on the payroll sheet.
 - **2026-11-19** - Payroll: CA requests inside the payroll table.
+- **2026-11-19** - Payroll: taller payroll table.
