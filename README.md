@@ -95,3 +95,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-19** - Payroll: Mandatory contributions page (SSS / HDMF / PHIC, weekly deduction).
 - **2026-11-19** - Accounting: Receipts log (input VAT).
 - **2026-11-19** - Accounting: Pag-IBIG payments; Import / Export of the logs.
+- **2026-11-19** - Accounting: fixed 'APV No. is already used' on payables paid in parts.
