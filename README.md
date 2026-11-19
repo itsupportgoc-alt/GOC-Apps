@@ -80,3 +80,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-18** - Payroll: Salary adjustments table.
 - **2026-11-19** - Payroll & Project Hub: restored the 'show no balance' switch and the new GOC tab icon.
 - **2026-11-19** - Payroll: salary adjustments table like the payroll sheet.
+- **2026-11-19** - Payroll: salary adjustments typed on each employee row.
