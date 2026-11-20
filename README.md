@@ -98,3 +98,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-19** - Accounting: fixed 'APV No. is already used' on payables paid in parts.
 - **2026-11-19** - Mandatory contributions page also in Accounting.
 - **2026-11-19** - Payroll: page fix (Mandatory contributions section).
+- **2026-11-20** - Payroll: allowance read from the payroll Excel (Candahug / Kawayan columns).
