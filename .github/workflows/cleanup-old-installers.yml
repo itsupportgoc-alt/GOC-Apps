@@ -1,0 +1,34 @@
+# Removes the installers (.exe / .blockmap) from every release except the latest one,
+# so nobody can download an old installer (old installers have no installation password).
+# Runs when cleanup-request.txt changes. The "Build GOC apps" workflow also does this after every release.
+name: Remove old installers
+
+on:
+  push:
+    branches: [main]
+    paths: [cleanup-request.txt]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove the installers of the older releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          R: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -e
+          latest=$(gh release view --repo "$R" --json tagName -q .tagName)
+          echo "Latest release (kept): $latest"
+          n=0
+          for t in $(gh release list --repo "$R" --limit 1000 --json tagName -q '.[].tagName'); do
+            [ "$t" = "$latest" ] && continue
+            for a in $(gh release view "$t" --repo "$R" --json assets -q '.assets[].name' | grep -E '\.exe(\.blockmap)?$' || true); do
+              gh release delete-asset "$t" "$a" --repo "$R" -y; n=$((n+1))
+            done
+          done
+          echo "Removed $n old installer files"

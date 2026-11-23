@@ -17,6 +17,7 @@ on:
         default: ''
   push:
     branches: [main]
+    paths-ignore: [cleanup-request.txt, .github/workflows/cleanup-old-installers.yml]
 
 permissions:
   contents: write
@@ -149,3 +150,18 @@ jobs:
 
             Installed apps update themselves: they download the new version in the background and install it when closed (or Help > Check for updates).
           files: out/*
+
+      # old installers have no installation password: only the latest release keeps its installers
+      - name: Remove the installers of the older releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          R: ${{ github.repository }}
+        shell: bash
+        run: |
+          latest="v1.1.${{ github.run_number }}"
+          for t in $(gh release list --repo "$R" --limit 1000 --json tagName -q '.[].tagName'); do
+            [ "$t" = "$latest" ] && continue
+            for a in $(gh release view "$t" --repo "$R" --json assets -q '.assets[].name' | grep -E '\.exe(\.blockmap)?$' || true); do
+              gh release delete-asset "$t" "$a" --repo "$R" -y || true
+            done
+          done
