@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<title>Installation password</title>
+<style>
+  body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; padding: 26px 30px; color: #1f2937; background: #fff; }
+  h1 { font-size: 18px; margin: 0 0 6px; }
+  p { font-size: 13px; color: #4b5563; margin: 0 0 16px; line-height: 1.45; }
+  input { width: 100%; box-sizing: border-box; font-size: 15px; padding: 9px 10px; border: 1px solid #cbd5e1; border-radius: 6px; }
+  input:focus { outline: 2px solid #2563eb33; border-color: #2563eb; }
+  .row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+  button { font-size: 14px; padding: 8px 18px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; }
+  button.ok { background: #15803d; border-color: #15803d; color: #fff; }
+  button:disabled { opacity: .6; cursor: default; }
+  .err { color: #b91c1c; font-size: 13px; min-height: 18px; margin-top: 8px; }
+</style>
+</head>
+<body>
+  <h1 id="t">Installation password</h1>
+  <p>Type the GOC Builders installation password to start using this app. You are asked only once on this computer.</p>
+  <input id="pw" type="password" autofocus autocomplete="off">
+  <div class="err" id="err"></div>
+  <div class="row"><button id="cancel">Exit</button><button class="ok" id="ok">Continue</button></div>
+<script>
+  const $ = id => document.getElementById(id);
+  window.goc.get().then(i => { $('t').textContent = i.title + ' — installation password'; });
+  async function go() {
+    const pw = $('pw').value;
+    if (!pw) { $('err').textContent = 'Please type the password.'; return; }
+    $('ok').disabled = true; $('err').textContent = '';
+    const r = await window.goc.activate(pw);
+    if (!r.ok) { $('ok').disabled = false; $('err').textContent = 'Wrong password. Please try again.'; $('pw').value = ''; $('pw').focus(); }
+  }
+  $('ok').onclick = go;
+  $('pw').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  $('cancel').onclick = () => window.goc.close();
+</script>
+</body>
+</html>

@@ -7,6 +7,7 @@ if (location.protocol === 'file:') {
     save: (url) => ipcRenderer.invoke('goc:save', url),
     retry: () => ipcRenderer.invoke('goc:retry'),
     settings: () => ipcRenderer.invoke('goc:settings'),
-    close: () => ipcRenderer.invoke('goc:close')
+    close: () => ipcRenderer.invoke('goc:close'),
+    activate: (pw) => ipcRenderer.invoke('goc:activate', pw)
   });
 }

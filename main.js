@@ -21,6 +21,41 @@ const APP_KEY = cfg.appKey || '';
 
 let win = null;
 let settingsWin = null;
+let activateWin = null;
+
+/* ---------- installation password ----------
+ * The installer asks for it (GitHub secret GOC_INSTALL_PASSWORD; only a salted hash is inside the app).
+ * The installer writes "goc-activated" next to the app's .exe. If that file is missing (the app files were copied
+ * or unpacked without the installer), the app asks for the same password once on this computer. */
+function needsActivation() {
+  if (!cfg.installHash || !app.isPackaged) return false;
+  if (fs.existsSync(path.join(path.dirname(app.getPath('exe')), 'goc-activated'))) return false;
+  return !readSettings().activated;
+}
+function passwordOk(pw) {
+  try {
+    const want = Buffer.from(cfg.installHash, 'base64');
+    const got = require('crypto').pbkdf2Sync(String(pw || ''), Buffer.from(cfg.installSalt, 'base64'), cfg.installIter || 200000, want.length, 'sha1');
+    return got.length === want.length && require('crypto').timingSafeEqual(got, want);
+  } catch (e) { return false; }
+}
+function openActivate() {
+  activateWin = new BrowserWindow({
+    width: 480, height: 300, resizable: false, minimizable: false, maximizable: false,
+    title: TITLE + ' - installation password', icon: ICON, autoHideMenuBar: true,
+    webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true }
+  });
+  activateWin.setMenu(null);
+  activateWin.loadFile(path.join(__dirname, 'activate.html'));
+  activateWin.on('closed', () => { activateWin = null; if (!win) app.quit(); });
+}
+ipcMain.handle('goc:activate', (e, pw) => {
+  if (!passwordOk(pw)) return { ok: false };
+  writeSettings({ ...readSettings(), activated: true });
+  if (!win) { createWindow(); setupUpdates(); }
+  if (activateWin) activateWin.close();
+  return { ok: true };
+});
 
 /* ---------- settings (saved per computer) ---------- */
 const settingsFile = () => path.join(app.getPath('userData'), 'settings.json');
@@ -177,7 +212,10 @@ ipcMain.handle('goc:save', (e, url) => {
 });
 ipcMain.handle('goc:retry', () => { loadModule(); });
 ipcMain.handle('goc:settings', () => { openSettings(); });
-ipcMain.handle('goc:close', () => { if (settingsWin) settingsWin.close(); });
+ipcMain.handle('goc:close', e => {
+  const w = BrowserWindow.fromWebContents(e.sender);
+  if (w && w === activateWin) w.close(); else if (settingsWin) settingsWin.close();
+});
 
 /* ---------- menu ---------- */
 function buildMenu() {
@@ -272,8 +310,11 @@ function checkForUpdatesNow() {
 if (!app.requestSingleInstanceLock()) {
   app.quit();
 } else {
-  app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.focus(); } });
+  app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.focus(); } else if (activateWin) activateWin.focus(); });
   app.setAppUserModelId('com.gocbuilders.' + MODULE);
-  app.whenReady().then(() => { sendAppKey(); buildMenu(); createWindow(); setupUpdates(); });
+  app.whenReady().then(() => {
+    sendAppKey(); buildMenu();
+    if (needsActivation()) openActivate(); else { createWindow(); setupUpdates(); }
+  });
   app.on('window-all-closed', () => app.quit());
 }
