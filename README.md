@@ -110,3 +110,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - 2026-11-23: Accounting - service invoices by project, receipts address, remarks column, find duplicate suppliers.
 - 2026-11-23: Accounting - blank P.O. forms with control numbers, blank delivery receipts.
 - 2026-11-23: Accounting - download documents as PDF / Excel.
+- 2026-11-23: Accounting - Export to PDF on every list.
