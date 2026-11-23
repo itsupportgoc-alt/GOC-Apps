@@ -104,3 +104,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-23** - Accounting: delete a purchase order.
 - **2026-11-23** - Accounting: Import all / Export all.
 - **2026-11-23** - Accounting: Import all fixes.
+- **2026-11-23** - Accounting: P.O. form like the client's.
