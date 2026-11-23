@@ -108,3 +108,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - **2026-11-23** - Accounting: vouchers, print preview, request slip.
 - 2026-11-23: All apps - installation password (asked when installing; updates do not ask).
 - 2026-11-23: Accounting - service invoices by project, receipts address, remarks column, find duplicate suppliers.
+- 2026-11-23: Accounting - blank P.O. forms with control numbers, blank delivery receipts.
