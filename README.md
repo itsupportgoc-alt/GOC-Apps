@@ -115,3 +115,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - 2026-11-24: Accounting - auto amount paid, CV/OPV = APV No., editable lists with account codes.
 - 2026-11-24: What's new - last 3 days only, shorter texts.
 - 2026-11-24: Materials - Paste message (daily balance request).
+- 2026-11-24: build run again (Materials).
