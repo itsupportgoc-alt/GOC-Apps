@@ -122,3 +122,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - 2026-11-25: Materials - header buttons moved to the pages they belong to.
 - 2026-11-25: Accounting - Issuance of PDC (post-dated cheques).
 - 2026-11-25: Accounting - cheque payables shown on the Issuance of PDC page automatically.
+- 2026-11-25: Accounting - Cheque monitoring by period and bank.
