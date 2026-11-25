@@ -118,3 +118,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - 2026-11-24: build run again (Materials).
 - 2026-11-24: restored the app icons and settings.html (removed by mistake); release Accounting, Materials and GOC Builders again.
 - 2026-11-24: Accounting - Summary of payables.
+- 2026-11-25: Materials - statuses Hold, Incoming, Ongoing fabrication + Purchasing location column.
