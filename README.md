@@ -124,3 +124,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - 2026-11-25: Accounting - cheque payables shown on the Issuance of PDC page automatically.
 - 2026-11-25: Accounting - Cheque monitoring by period and bank.
 - 2026-11-25: Accounting - cheque monitoring latest due first, Released / Issue PDC buttons removed.
+- 2026-11-25: Accounting - Funded status for cheques (money deposited).
