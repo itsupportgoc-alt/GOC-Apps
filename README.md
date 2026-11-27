@@ -128,3 +128,4 @@ This repository only contains the app wrapper (no system code, no passwords). Ev
 - 2026-11-25: Accounting - cheque monitoring by fixed periods (1-8, 9-15, 16-22, 23-end).
 - 2026-11-25: Accounting - cheque monitoring per supplier.
 - 2026-11-26: Accounting - 1-inch margins on documents and lists.
+- 2026-11-27: Accounting - Summary of payables per supplier, Payment summary report.
